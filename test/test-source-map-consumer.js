@@ -6,9 +6,9 @@
  */
 
 var util = require("./util");
-var SourceMapConsumer = require('../lib/source-map-consumer').SourceMapConsumer;
-var IndexedSourceMapConsumer = require('../lib/source-map-consumer').IndexedSourceMapConsumer;
-var BasicSourceMapConsumer = require('../lib/source-map-consumer').BasicSourceMapConsumer;
+var SourceMapConsumer = require('../lib/source-map-consumer-cheerp').SourceMapConsumer;
+var IndexedSourceMapConsumer = require('../lib/source-map-consumer-cheerp').IndexedSourceMapConsumer;
+var BasicSourceMapConsumer = require('../lib/source-map-consumer-cheerp').BasicSourceMapConsumer;
 var SourceMapGenerator = require('../lib/source-map-generator').SourceMapGenerator;
 
 exports['test that we can instantiate with a string or an object'] = async function (assert) {
