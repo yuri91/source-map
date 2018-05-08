@@ -56,10 +56,10 @@ async function benchmark(setup, action, tearDown = () => {}) {
 }
 
 async function getTestMapping() {
-  let smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+  let smc = await new consumerImpl(testSourceMap);
 
   let mappings = [];
-  smc.eachMapping([].push, mappings, sourceMap.SourceMapConsumer.ORIGINAL_ORDER);
+  smc.eachMapping([].push, mappings, consumerImpl.ORIGINAL_ORDER);
 
   let testMapping = mappings[Math.floor(mappings.length / 13)];
   smc.destroy();
@@ -71,7 +71,7 @@ var benchmarks = {
     let smg;
     return benchmark(
       async function () {
-        var smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+        var smc = await new consumerImpl(testSourceMap);
         smg = sourceMap.SourceMapGenerator.fromSourceMap(smc);
         smc.destroy();
       },
@@ -88,7 +88,7 @@ var benchmarks = {
         testMapping = await getTestMapping();
       },
       async function () {
-        let smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+        let smc = await new consumerImpl(testSourceMap);
 
         benchmarkBlackbox(smc.allGeneratedPositionsFor({
           source: testMapping.source,
@@ -107,7 +107,7 @@ var benchmarks = {
         testMapping = await getTestMapping();
       },
       async function () {
-        let smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+        let smc = await new consumerImpl(testSourceMap);
 
         benchmarkBlackbox(smc.originalPositionFor({
           line: testMapping.generatedLine,
@@ -125,7 +125,7 @@ var benchmarks = {
     return benchmark(
       async function () {
         testMapping = await getTestMapping();
-        smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+        smc = await new consumerImpl(testSourceMap);
       },
       async function () {
         benchmarkBlackbox(smc.allGeneratedPositionsFor({
@@ -145,7 +145,7 @@ var benchmarks = {
     return benchmark(
       async function () {
         testMapping = await getTestMapping();
-        smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+        smc = await new consumerImpl(testSourceMap);
       },
       async function () {
         benchmarkBlackbox(smc.originalPositionFor({
@@ -163,7 +163,7 @@ var benchmarks = {
     return benchmark(
       noop,
       async function () {
-        const smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+        const smc = await new consumerImpl(testSourceMap);
 
         let maxLine = 0;
         let maxCol = 0;
@@ -185,7 +185,7 @@ var benchmarks = {
     let smc;
     return benchmark(
       async function () {
-        smc = await new sourceMap.SourceMapConsumer(testSourceMap);
+        smc = await new consumerImpl(testSourceMap);
       },
       async function () {
         let maxLine = 0;

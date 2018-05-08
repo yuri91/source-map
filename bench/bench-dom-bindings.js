@@ -25,6 +25,7 @@ bindRange("bench-iters", input => {
 });
 
 const whichMap = document.getElementById("input-map");
+const whichImpl = document.getElementById("impl");
 const multiplyBy = document.getElementById("multiply-size-by");
 
 var testSourceMap = SCALA_JS_RUNTIME_SOURCE_MAP;
@@ -52,6 +53,22 @@ updateTestSourceMap();
 whichMap.addEventListener("input", e => {
   e.preventDefault();
   updateTestSourceMap();
+});
+
+var consumerImpl = sourceMap.SourceMapConsumerCheerp;
+
+const updateImpl = () => {
+	if (whichImpl.value == "CHEERP") {
+		consumerImpl = sourceMap.SourceMapConsumerCheerp;
+	} else {
+		consumerImpl = sourceMap.SourceMapConsumer;
+	}
+};
+updateImpl();
+
+whichImpl.addEventListener("input", e => {
+  e.preventDefault();
+  updateImpl();
 });
 
 multiplyBy.addEventListener("input", e => {
