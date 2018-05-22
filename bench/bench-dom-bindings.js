@@ -127,6 +127,13 @@ function benchOnClick(button, results, benchName, bencher) {
       </table>
       <pre style="overflow:scroll;max-height:100px; max-width:500px;outline:1px solid black">${csv}</pre>
     `;
+    var blob = new Blob([csv], {type: 'text/csv'});
+    var a = document.createElement('a');
+    a.download = `${implAndBrowser}-${testSourceMap.mappings.length}-${benchName}.csv`;
+    a.href = URL.createObjectURL(blob);
+    a.text = "Download";
+    results.appendChild(a);
+
   }, false);
 }
 
