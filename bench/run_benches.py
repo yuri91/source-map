@@ -8,8 +8,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 import itertools
 
-impls = ["Rust","Cheerp"]
-browsers = ["Chrome","Firefox"]
+impls = [
+    "Rust",
+    "Cheerp"
+]
+browsers = [
+    "Chrome",
+    "Firefox"
+]
 benches = [
     "set.first.breakpoint",
     "first.pause.at.exception",
