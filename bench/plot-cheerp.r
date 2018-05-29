@@ -17,33 +17,38 @@ jitterBoxPlot <- function(data, operation, titleText) {
 
     operationData <- subset(data, data$Operation == operation)
 
-    operationData$Implementation.and.Browser <- factor(
-        operationData$Implementation.and.Browser,
+    operationData$Implementation <- factor(
+        operationData$Implementation,
         levels = c(
-            "Cheerp.Chrome",
-            "Rust.Chrome",
-            "Cheerp.Firefox",
-            "Rust.Firefox"
+            "Cheerp",
+            "Rust"
+        )
+    )
+    operationData$Browser <- factor(
+        operationData$Browser,
+        levels = c(
+            "Firefox",
+            "Chrome"
         )
     )
 
     chromeCheerp <- subset(operationData,
-                       operationData$Implementation.and.Browser == "Cheerp.Chrome")$Time
+                       operationData$Implementation == "Cheerp" & operationData$Browser == "Chrome")$Time
     print(paste("mean: scala.js: Chrome+Cheerp =", mean(chromeCheerp)))
     print(paste("cv: scala.js: Chrome+Cheerp =", sd(chromeCheerp) / mean(chromeCheerp)))
 
     chromeRust <- subset(operationData,
-                         operationData$Implementation.and.Browser == "Rust.Chrome")$Time
+                       operationData$Implementation == "Rust" & operationData$Browser == "Chrome")$Time
     print(paste("mean: scala.js: Chrome+Rust =", mean(chromeRust)))
     print(paste("cv: scala.js: Chrome+Rust =", sd(chromeRust) / mean(chromeRust)))
 
     firefoxCheerp <- subset(operationData,
-                        operationData$Implementation.and.Browser == "Cheerp.Firefox")$Time
+                       operationData$Implementation == "Cheerp" & operationData$Browser == "Firefox")$Time
     print(paste("mean: scala.js: Firefox+Cheerp =", mean(firefoxCheerp)))
     print(paste("cv: scala.js: Firefox+Cheerp =", sd(firefoxCheerp) / mean(firefoxCheerp)))
 
     firefoxRust <- subset(operationData,
-                          operationData$Implementation.and.Browser == "Rust.Firefox")$Time
+                       operationData$Implementation == "Rust" & operationData$Browser == "Firefox")$Time
     print(paste("mean: scala.js: Firefox+Rust =", mean(firefoxRust)))
     print(paste("cv: scala.js: Firefox+Rust =", sd(firefoxRust) / mean(firefoxRust)))
 
@@ -51,10 +56,10 @@ jitterBoxPlot <- function(data, operation, titleText) {
     print(paste("normalized: Firefox =", mean(firefoxRust) / mean(firefoxCheerp)))
 
     thePlot <- ggplot(operationData,
-                      aes(x = operationData$Implementation.and.Browser,
+                      aes(x = paste(operationData$Implementation, operationData$Browser,sep="."),
                           y = operationData$Time,
-                          color = operationData$Implementation.and.Browser,
-                          pch = operationData$Implementation.and.Browser)) +
+                          color = operationData$Implementation,
+                          pch = operationData$Browser)) +
         geom_boxplot(outlier.shape = NA) +
         geom_jitter(position = position_jitter(width = 0.1)) +
         scale_y_continuous(limits = quantile(operationData$Time, c(NA, 0.99))) +
@@ -87,21 +92,26 @@ jitterBoxPlot(largeData, "iterate.already.parsed", "Already Parsed, Iterate Each
 meanPlot <- function(data, operation, titleText) {
     operationData <- subset(data, data$Operation == operation)
 
-    operationData$Implementation.and.Browser <- factor(
-        operationData$Implementation.and.Browser,
+    operationData$Implementation <- factor(
+        operationData$Implementation,
         levels = c(
-            "Cheerp.Chrome",
-            "Rust.Chrome",
-            "Cheerp.Firefox",
-            "Rust.Firefox"
+            "Cheerp",
+            "Rust"
+        )
+    )
+    operationData$Browser <- factor(
+        operationData$Browser,
+        levels = c(
+            "Firefox",
+            "Chrome"
         )
     )
 
     thePlot <- ggplot(operationData,
                       aes(x = operationData$Mappings.Size,
                           y = operationData$Time,
-                          color = operationData$Implementation.and.Browser,
-                          pch = operationData$Implementation.and.Browser)) +
+                          color = operationData$Implementation,
+                          pch = operationData$Browser)) +
         stat_summary(fun.y = mean, geom = "line") +
         stat_summary(fun.y = mean, geom = "point") +
         geom_point() +
