@@ -35,10 +35,9 @@ const updateTestSourceMap = () => {
   testSourceMap = JSON.parse(JSON.stringify(origMap));
 
   const factor = parseInt(multiplyBy.value, 10);
-  if (factor === 1) {
+  if (isNaN(factor) || factor === 1) {
     return;
   }
-
   const mappings = new Array(factor);
   mappings.fill(origMap.mappings);
   testSourceMap.mappings = mappings.join(";");
@@ -50,7 +49,7 @@ const updateTestSourceMap = () => {
 };
 updateTestSourceMap();
 
-whichMap.addEventListener("input", e => {
+whichMap.addEventListener("change", e => {
   e.preventDefault();
   updateTestSourceMap();
 });
@@ -66,12 +65,12 @@ const updateImpl = () => {
 };
 updateImpl();
 
-whichImpl.addEventListener("input", e => {
+whichImpl.addEventListener("change", e => {
   e.preventDefault();
   updateImpl();
 });
 
-multiplyBy.addEventListener("input", e => {
+multiplyBy.addEventListener("change", e => {
   e.preventDefault();
   updateTestSourceMap();
 });
