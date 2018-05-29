@@ -58,7 +58,7 @@ whichMap.addEventListener("input", e => {
 var consumerImpl = sourceMap.SourceMapConsumerCheerp;
 
 const updateImpl = () => {
-	if (whichImpl.value == "CHEERP") {
+	if (whichImpl.value == "Cheerp") {
 		consumerImpl = sourceMap.SourceMapConsumerCheerp;
 	} else {
 		consumerImpl = sourceMap.SourceMapConsumer;
@@ -125,15 +125,8 @@ function benchOnClick(button, results, benchName, bencher) {
           </tr>
         </tbody>
       </table>
-      <pre style="overflow:scroll;max-height:100px; max-width:500px;outline:1px solid black">${csv}</pre>
+      <pre id="data.${benchName}" style="overflow:scroll;max-height:100px; max-width:500px;outline:1px solid black">${csv}</pre>
     `;
-    var blob = new Blob([csv], {type: 'text/csv'});
-    var a = document.createElement('a');
-    a.download = `${implAndBrowser}-${testSourceMap.mappings.length}-${benchName}.csv`;
-    a.href = URL.createObjectURL(blob);
-    a.text = "Download";
-    results.appendChild(a);
-    a.click();
 
   }, false);
 }
@@ -156,7 +149,8 @@ function start() {
   let params = window.location.hash.split(";");
   if (params.length <= 1)
     return;
-  whichImpl.value = params[1];
+  whichImpl.value = params[1].split(",")[0];
+  implAndBrowserInput.value = params[1];
   whichMap.value = params[2];
   multiplyBy.value = params[3];
   updateImplAndBrowser();

@@ -114,7 +114,7 @@ meanPlot <- function(data, operation, titleText) {
                           pch = operationData$Browser)) +
         stat_summary(fun.y = mean, geom = "line") +
         stat_summary(fun.y = mean, geom = "point") +
-        geom_point() +
+        #geom_point() +
         theme(legend.position = "bottom",
               legend.direction="vertical",
               legend.title = element_blank()) +
