@@ -103,7 +103,7 @@ function benchOnClick(button, results, benchName, bencher) {
 
     const csv = stats
           .xs
-          .map(x => `"${implAndBrowser}",${testSourceMap.mappings.length},"${benchName}",${x}`)
+          .map(x => `${implAndBrowser},${testSourceMap.mappings.length},"${benchName}",${x}`)
           .join("\n");
 
     results.innerHTML = `
@@ -133,6 +133,7 @@ function benchOnClick(button, results, benchName, bencher) {
     a.href = URL.createObjectURL(blob);
     a.text = "Download";
     results.appendChild(a);
+    a.click();
 
   }, false);
 }
@@ -143,6 +144,7 @@ for (let bench of Object.keys(benchmarks)) {
 
   const button = document.createElement("button");
   button.innerHTML = `<h2>${bench}</h2>`;
+  button.id = bench;
   document.body.appendChild(button);
 
   const results = document.createElement("div");
@@ -150,3 +152,17 @@ for (let bench of Object.keys(benchmarks)) {
 
   benchOnClick(button, results, bench, benchmarks[bench]);
 }
+function start() {
+  let params = window.location.hash.split(";");
+  if (params.length <= 1)
+    return;
+  whichImpl.value = params[1];
+  whichMap.value = params[2];
+  multiplyBy.value = params[3];
+  updateImplAndBrowser();
+  updateTestSourceMap();
+  let test = document.getElementById(params[4]);
+  test.click();
+}
+start();
+
