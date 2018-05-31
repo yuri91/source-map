@@ -61,7 +61,7 @@ for impl,browser,bench,(source,factor) in itertools.product(impls,browsers,bench
     button = driver.find_element_by_id(bench)
     button.click()
 
-    element = WebDriverWait(driver,60*3).until(
+    element = WebDriverWait(driver,60*10).until(
         EC.presence_of_element_located((By.ID, "data."+bench))
     )
 
