@@ -35,25 +35,31 @@ jitterBoxPlot <- function(data, operation, titleText) {
     chromeCheerp <- subset(operationData,
                        operationData$Implementation == "Cheerp" & operationData$Browser == "Chrome")$Time
     print(paste("mean: scala.js: Chrome+Cheerp =", mean(chromeCheerp)))
+    print(paste("sd: scala.js: Chrome+Cheerp =", sd(chromeCheerp)))
     print(paste("cv: scala.js: Chrome+Cheerp =", sd(chromeCheerp) / mean(chromeCheerp)))
 
     chromeRust <- subset(operationData,
                        operationData$Implementation == "Rust" & operationData$Browser == "Chrome")$Time
     print(paste("mean: scala.js: Chrome+Rust =", mean(chromeRust)))
+    print(paste("sd: scala.js: Chrome+Rust =", sd(chromeRust)))
     print(paste("cv: scala.js: Chrome+Rust =", sd(chromeRust) / mean(chromeRust)))
 
     firefoxCheerp <- subset(operationData,
                        operationData$Implementation == "Cheerp" & operationData$Browser == "Firefox")$Time
     print(paste("mean: scala.js: Firefox+Cheerp =", mean(firefoxCheerp)))
+    print(paste("sd: scala.js: Firefox+Cheerp =", sd(firefoxCheerp)))
     print(paste("cv: scala.js: Firefox+Cheerp =", sd(firefoxCheerp) / mean(firefoxCheerp)))
 
     firefoxRust <- subset(operationData,
                        operationData$Implementation == "Rust" & operationData$Browser == "Firefox")$Time
     print(paste("mean: scala.js: Firefox+Rust =", mean(firefoxRust)))
+    print(paste("sd: scala.js: Firefox+Rust =", sd(firefoxRust)))
     print(paste("cv: scala.js: Firefox+Rust =", sd(firefoxRust) / mean(firefoxRust)))
 
-    print(paste("normalized: Chrome =", mean(chromeRust) / mean(chromeCheerp)))
-    print(paste("normalized: Firefox =", mean(firefoxRust) / mean(firefoxCheerp)))
+    print(paste("normalized mean: Chrome =", mean(chromeCheerp) / mean(chromeRust)))
+    print(paste("normalized sd: Chrome =", sd(chromeCheerp) / sd(chromeRust)))
+    print(paste("normalized mean: Firefox =", mean(firefoxCheerp) / mean(firefoxRust)))
+    print(paste("normalized sd: Firefox =", sd(firefoxCheerp) / sd(firefoxRust)))
 
     thePlot <- ggplot(operationData,
                       aes(x = paste(operationData$Implementation, operationData$Browser,sep="."),
