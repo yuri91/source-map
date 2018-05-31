@@ -16,8 +16,9 @@ except:
 import itertools
 
 impls = [
+    "Js",
     "Rust",
-    "Cheerp"
+    "Cheerp",
 ]
 browsers = [
     "Chrome",

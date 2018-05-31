@@ -59,8 +59,10 @@ var consumerImpl = sourceMap.SourceMapConsumerCheerp;
 const updateImpl = () => {
 	if (whichImpl.value == "Cheerp") {
 		consumerImpl = sourceMap.SourceMapConsumerCheerp;
-	} else {
+	} else if (whichImpl.value == "Rust"){
 		consumerImpl = sourceMap.SourceMapConsumer;
+	} else {
+		consumerImpl = sourceMap.SourceMapConsumerJs;
 	}
 };
 updateImpl();
