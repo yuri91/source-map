@@ -7,6 +7,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+try:
+    from selenium.webdriver.safari.options import Options as SafariOptions
+    safari_supported = True
+except:
+    safari_supported = False
 
 import itertools
 
@@ -16,8 +21,10 @@ impls = [
 ]
 browsers = [
     "Chrome",
-    "Firefox"
+    "Firefox",
 ]
+if safari_supported:
+    browsers.append("Safari")
 benches = [
     "set.first.breakpoint",
     "first.pause.at.exception",
@@ -43,10 +50,14 @@ for impl,browser,bench,(source,factor) in itertools.product(impls,browsers,bench
         options = FirefoxOptions()
         options.set_headless(headless)
         driver = webdriver.Firefox(firefox_options=options)
-    else:
+    elif browser == "Chrome":
         options = ChromeOptions()
         options.set_headless(headless)
         driver = webdriver.Chrome(chrome_options=options)
+    elif browser == "Safari":
+        options = SafariOptions()
+        options.set_headless(headless)
+        driver = webdriver.Chrome(safari_options=options)
     driver.get("http://localhost:8000/bench/bench.html")
     select_map = Select(driver.find_element_by_id("input-map"))
     select_map.select_by_value(source)
