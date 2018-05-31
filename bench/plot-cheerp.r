@@ -21,7 +21,8 @@ jitterBoxPlot <- function(data, operation, titleText) {
         operationData$Implementation,
         levels = c(
             "Cheerp",
-            "Rust"
+            "Rust",
+	    "Js"
         )
     )
     operationData$Browser <- factor(
@@ -44,6 +45,12 @@ jitterBoxPlot <- function(data, operation, titleText) {
     print(paste("sd: scala.js: Chrome+Rust =", sd(chromeRust)))
     print(paste("cv: scala.js: Chrome+Rust =", sd(chromeRust) / mean(chromeRust)))
 
+    chromeJs <- subset(operationData,
+                       operationData$Implementation == "Js" & operationData$Browser == "Chrome")$Time
+    print(paste("mean: scala.js: Chrome+Js =", mean(chromeJs)))
+    print(paste("sd: scala.js: Chrome+Js =", sd(chromeJs)))
+    print(paste("cv: scala.js: Chrome+Js =", sd(chromeJs) / mean(chromeJs)))
+
     firefoxCheerp <- subset(operationData,
                        operationData$Implementation == "Cheerp" & operationData$Browser == "Firefox")$Time
     print(paste("mean: scala.js: Firefox+Cheerp =", mean(firefoxCheerp)))
@@ -56,10 +63,16 @@ jitterBoxPlot <- function(data, operation, titleText) {
     print(paste("sd: scala.js: Firefox+Rust =", sd(firefoxRust)))
     print(paste("cv: scala.js: Firefox+Rust =", sd(firefoxRust) / mean(firefoxRust)))
 
-    print(paste("normalized mean: Chrome =", mean(chromeCheerp) / mean(chromeRust)))
-    print(paste("normalized sd: Chrome =", sd(chromeCheerp) / sd(chromeRust)))
-    print(paste("normalized mean: Firefox =", mean(firefoxCheerp) / mean(firefoxRust)))
-    print(paste("normalized sd: Firefox =", sd(firefoxCheerp) / sd(firefoxRust)))
+    firefoxJs <- subset(operationData,
+                       operationData$Implementation == "Js" & operationData$Browser == "Firefox")$Time
+    print(paste("mean: scala.js: Firefox+Js =", mean(firefoxJs)))
+    print(paste("sd: scala.js: Firefox+Js =", sd(firefoxJs)))
+    print(paste("cv: scala.js: Firefox+Js =", sd(firefoxJs) / mean(firefoxJs)))
+
+    print(paste("normalized mean Cheerp: Chrome =", mean(chromeCheerp) / mean(chromeJs)))
+    print(paste("normalized mean Cheerp: Firefox =", mean(firefoxCheerp) / mean(firefoxJs)))
+    print(paste("normalized mean Rust: Chrome =", mean(chromeRust) / mean(chromeJs)))
+    print(paste("normalized mean Rust: Firefox =", mean(firefoxRust) / mean(firefoxJs)))
 
     thePlot <- ggplot(operationData,
                       aes(x = paste(operationData$Implementation, operationData$Browser,sep="."),
@@ -102,7 +115,8 @@ meanPlot <- function(data, operation, titleText) {
         operationData$Implementation,
         levels = c(
             "Cheerp",
-            "Rust"
+            "Rust",
+	    "Js"
         )
     )
     operationData$Browser <- factor(

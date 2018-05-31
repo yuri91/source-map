@@ -19,8 +19,10 @@ data$Build <- factor(
     levels = c(
         "Rust",
         "Cheerp",
+        "Js",
         "Rust (gzip)",
-        "Cheerp (gzip)"
+        "Cheerp (gzip)",
+        "Js (gzip)"
     )
 )
 
