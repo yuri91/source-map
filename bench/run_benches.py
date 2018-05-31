@@ -45,7 +45,7 @@ sources_and_factors = [
 data = "Implementation,Browser,Mappings.Size,Operation,Time"
 
 headless = True
-runs = 10
+runs = 100
 for impl,browser,bench,(source,factor) in itertools.product(impls,browsers,benches,sources_and_factors):
     print("Running "+str((impl,browser,bench,source,factor)))
     if browser == "Firefox":
