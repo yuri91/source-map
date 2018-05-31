@@ -5,6 +5,8 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 import itertools
 
@@ -34,12 +36,17 @@ sources_and_factors = [
 
 data = "Implementation,Browser,Mappings.Size,Operation,Time"
 
+headless = True
 for impl,browser,bench,(source,factor) in itertools.product(impls,browsers,benches,sources_and_factors):
     print("Running "+str((impl,browser,bench,source,factor)))
     if browser == "Firefox":
-        driver = webdriver.Firefox()
+        options = FirefoxOptions()
+        options.set_headless(headless)
+        driver = webdriver.Firefox(firefox_options=options)
     else:
-        driver = webdriver.Chrome()
+        options = ChromeOptions()
+        options.set_headless(headless)
+        driver = webdriver.Chrome(chrome_options=options)
     driver.get("http://localhost:8000/bench/bench.html")
     select_map = Select(driver.find_element_by_id("input-map"))
     select_map.select_by_value(source)
