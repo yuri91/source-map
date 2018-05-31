@@ -144,18 +144,4 @@ for (let bench of Object.keys(benchmarks)) {
 
   benchOnClick(button, results, bench, benchmarks[bench]);
 }
-function start() {
-  let params = window.location.hash.split(";");
-  if (params.length <= 1)
-    return;
-  whichImpl.value = params[1].split(",")[0];
-  implAndBrowserInput.value = params[1];
-  whichMap.value = params[2];
-  multiplyBy.value = params[3];
-  updateImplAndBrowser();
-  updateTestSourceMap();
-  let test = document.getElementById(params[4]);
-  test.click();
-}
-start();
 
