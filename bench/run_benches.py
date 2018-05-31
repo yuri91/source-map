@@ -45,6 +45,7 @@ sources_and_factors = [
 data = "Implementation,Browser,Mappings.Size,Operation,Time"
 
 headless = True
+runs = 10
 for impl,browser,bench,(source,factor) in itertools.product(impls,browsers,benches,sources_and_factors):
     print("Running "+str((impl,browser,bench,source,factor)))
     if browser == "Firefox":
@@ -60,6 +61,9 @@ for impl,browser,bench,(source,factor) in itertools.product(impls,browsers,bench
         options.set_headless(headless)
         driver = webdriver.Chrome(safari_options=options)
     driver.get("http://localhost:8000/bench/bench.html")
+    iters = driver.find_element_by_id("iters")
+    iters.clear()
+    iters.send_keys(str(runs))
     select_map = Select(driver.find_element_by_id("input-map"))
     select_map.select_by_value(source)
     multiply = driver.find_element_by_id("multiply-size-by")
