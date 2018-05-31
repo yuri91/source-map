@@ -61,7 +61,6 @@ async function getTestMapping() {
   let mappings = [];
   smc.eachMapping(m => mappings.push(m), null, consumerImpl.ORIGINAL_ORDER);
 
-  console.log(mappings);
   let testMapping = mappings[Math.floor(mappings.length / 13)];
   smc.destroy();
   return testMapping;
